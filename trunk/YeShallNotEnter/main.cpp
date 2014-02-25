@@ -19,11 +19,11 @@ ExtensionInterfaceData __stdcall YeShallNotEnter::GetExtensionData()
 
 bool __stdcall YeShallNotEnter::HandleNewChatLine(short sMode, char* szText)
 {
-	char* substr = strpbrk(szText+1, "\x7F\x31\x01");
+	char* substr = strstr(szText+1, "\x7F\x31");
 	while (substr != NULL)
 	{
-		memset(substr, '\x20', 1);
-		substr = strpbrk(substr, "\x7F\x31\x01");
+		memset(substr, '\x20', 3);
+		substr = strstr(substr, "\x7F\x31");
 	}
 	return false;
 }
@@ -31,7 +31,7 @@ bool __stdcall YeShallNotEnter::HandleNewChatLine(short sMode, char* szText)
 __declspec( dllexport ) void __stdcall CreateExtensionData(ExtensionInterfaceData* Data)
 {
 	ModuleData = Data;
-	ModuleData->ExtensionVersion		=		1.00;
+	ModuleData->ExtensionVersion		=		1.01;
 	ModuleData->InterfaceVersion		=		INTERFACEVERSION;
 	ModuleData->RequiresValadation		=		false;
 	ModuleData->AutoloadConfiguration	=		true;
